@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chainex – Powering the Future of Finance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="glow glow1"></div>
+  <div class="glow glow2"></div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span id="toastIcon">✅</span>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <!-- BUY MODAL -->
+  <div class="modal-overlay" id="buyModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('buyModal')">✕</button>
+      <h3>Buy <span id="buyModalCoin">Bitcoin</span></h3>
+      <div class="form-group"><label>Amount (USD)</label><input type="number" placeholder="0.00" id="buyAmount" min="0"/></div>
+      <div class="form-group"><label>Payment Method</label>
+        <select><option>Chainex Wallet</option><option>Credit Card</option><option>Bank Transfer</option></select>
+      </div>
+      <div style="background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.15);border-radius:10px;padding:12px 14px;margin-bottom:20px;font-size:13px;color:var(--muted2)">
+        You will receive: <strong id="buyReceive" style="color:var(--text)">0</strong>
+      </div>
+      <button class="submit-btn" onclick="confirmBuy()">Confirm Purchase</button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="logo" onclick="navigate('home')">
+      <div class="logo-icon">H</div>Chainex
+    </a>
+    <ul class="nav-links">
+      <li><a onclick="navigate('home')" data-page="home">Explore</a></li>
+      <li><a onclick="navigate('prices')" data-page="prices">Prices</a></li>
+      <li><a onclick="navigate('why')" data-page="why">Why Chainex</a></li>
+      <li><a onclick="navigate('earn')" data-page="earn">Earn</a></li>
+      <li><a onclick="navigate('support')" data-page="support">Support</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-ghost" onclick="navigate('login')">Login</button>
+      <button class="btn-green" onclick="navigate('signup')">Sign up</button>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+    <section class="hero">
+      <h1>Powering the Future<br>of Finance</h1>
+      <p>Chainex powers seamless, secure blockchain transactions with unmatched speed and reliability</p>
+      <div class="signup-row">
+        <input type="text" placeholder="Email/Phone Number" id="heroEmail"/>
+        <button class="btn-green" onclick="heroSignup()">Sign up</button>
+      </div>
+      <div class="visual-wrap">
+        <div class="oc" style="position:absolute">
+          <div class="orbit-ring r1"></div>
+          <div class="orbit-ring r2"></div>
+          <div class="orbit-ring r3"></div>
+        </div>
+        <div class="oc" style="position:absolute"><div class="token t-hub">H</div></div>
+        <div class="oc" style="position:absolute"><div class="token t-btc">₿</div></div>
+        <div class="oc" style="position:absolute"><div class="token t-eth">Ξ</div></div>
+        <div class="oc" style="position:absolute"><div class="token t-sol">◎</div></div>
+        <div class="card card-fear">
+          <div class="card-hd"><span>Fear and Greed Index</span><span>⋮</span></div>
+          <svg viewBox="0 0 120 72" width="100%">
+            <defs><linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f44336"/><stop offset="50%" stop-color="#ffeb3b"/><stop offset="100%" stop-color="#00e676"/></linearGradient></defs>
+            <path d="M10 65 A50 50 0 0 1 110 65" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10" stroke-linecap="round"/>
+            <path d="M10 65 A50 50 0 0 1 110 65" fill="none" stroke="url(#gg)" stroke-width="10" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="50"/>
+            <line x1="60" y1="65" x2="92" y2="30" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="60" cy="65" r="4" fill="white"/>
+          </svg>
+          <div class="gauge-label"><span>Low</span><span>Score</span><span>High</span></div>
+          <div class="gauge-score">68%</div>
+        </div>
+        <div class="card card-wallet">
+          <div class="w-top">
+            <div class="avatar"></div>
+            <div class="w-info"><div class="w-name">Shivani Chauhan</div><div class="w-sub">Chainex Wallet</div></div>
+            <span style="color:var(--muted2);cursor:pointer">⋮</span>
+          </div>
+          <div class="w-amt">$26,000.16</div>
+          <div class="w-bar"><div class="w-fill"></div></div>
+        </div>
+      </div>
+    </section>
+    <div class="stats-bar">
+      <div class="stat-item"><div class="stat-num">$2.4T</div><div class="stat-lbl">Total Volume Traded</div></div>
+      <div class="stat-item"><div class="stat-num">12M+</div><div class="stat-lbl">Active Users</div></div>
+      <div class="stat-item"><div class="stat-num">180+</div><div class="stat-lbl">Countries Supported</div></div>
+      <div class="stat-item"><div class="stat-num">99.9%</div><div class="stat-lbl">Uptime Guaranteed</div></div>
+    </div>
+  </div>
+
+  <!-- PRICES -->
+  <div class="page" id="page-prices">
+    <div class="page-content">
+      <div class="page-title">Live Prices</div>
+      <div class="page-sub">Track real-time crypto prices across all major assets</div>
+      <div class="search-bar">
+        <span style="color:var(--muted)">🔍</span>
+        <input type="text" placeholder="Search coins..." id="coinSearch" oninput="filterCoins()"/>
+      </div>
+      <table class="prices-table">
+        <thead><tr><th>#</th><th>Coin</th><th>Price</th><th>24h %</th><th>Market Cap</th><th>7d</th><th>Action</th></tr></thead>
+        <tbody id="pricesBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- WHY CHAINEX -->
+  <div class="page" id="page-why">
+    <div class="page-content">
+      <div class="page-title">Why Chainex?</div>
+      <div class="page-sub">Built for speed, security, and the future of decentralized finance</div>
+      <div class="features-grid">
+        <div class="feature-card"><div class="feat-icon" style="background:rgba(0,230,118,0.1)">⚡</div><div class="feat-title">Lightning Fast</div><div class="feat-desc">Execute trades in milliseconds with our ultra-low latency matching engine. Never miss a market move.</div></div>
+        <div class="feature-card"><div class="feat-icon" style="background:rgba(98,126,234,0.1)">🔐</div><div class="feat-title">Military-Grade Security</div><div class="feat-desc">256-bit encryption, multi-sig wallets, cold storage, and real-time fraud detection keep your assets safe.</div></div>
+        <div class="feature-card"><div class="feat-icon" style="background:rgba(247,147,26,0.1)">💰</div><div class="feat-title">Low Fees</div><div class="feat-desc">Industry-leading 0.1% trading fees with zero hidden charges. Keep more of what you earn.</div></div>
+        <div class="feature-card"><div class="feat-icon" style="background:rgba(244,67,54,0.1)">🌐</div><div class="feat-title">Global Reach</div><div class="feat-desc">Available in 180+ countries with local payment methods, 24/7 support, and 40+ fiat currencies.</div></div>
+        <div class="feature-card"><div class="feat-icon" style="background:rgba(0,184,212,0.1)">📊</div><div class="feat-title">Advanced Analytics</div><div class="feat-desc">Professional-grade charts, portfolio tracking, and AI-powered market insights in one dashboard.</div></div>
+        <div class="feature-card"><div class="feat-icon" style="background:rgba(156,39,176,0.1)">🤝</div><div class="feat-title">DeFi Integration</div><div class="feat-desc">Access staking, yield farming, and liquidity pools directly from your Chainex wallet.</div></div>
+      </div>
+      <div class="why-stats">
+        <div class="why-stat"><div class="why-stat-num">$2.4T</div><div class="why-stat-lbl">Volume Traded</div></div>
+        <div class="why-stat"><div class="why-stat-num">12M+</div><div class="why-stat-lbl">Active Users</div></div>
+        <div class="why-stat"><div class="why-stat-num">0.01s</div><div class="why-stat-lbl">Avg Trade Speed</div></div>
+        <div class="why-stat"><div class="why-stat-num">A+</div><div class="why-stat-lbl">Security Rating</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EARN -->
+  <div class="page" id="page-earn">
+    <div class="page-content">
+      <div class="page-title">Earn with Chainex</div>
+      <div class="page-sub">Put your crypto to work and generate passive income</div>
+      <div class="earn-cards">
+        <div class="earn-card">
+          <div class="earn-title">Flexible Staking</div>
+          <div class="earn-apy">4.5% <span>APY</span></div>
+          <div class="earn-desc">Stake assets and withdraw anytime. Perfect for those who want flexibility without locking funds.</div>
+          <ul style="font-size:13px;color:var(--muted2);margin-bottom:20px;padding-left:16px;line-height:2.2"><li>No lock-up period</li><li>Daily rewards</li><li>Instant withdrawal</li></ul>
+          <button class="earn-btn secondary" onclick="earnStart('Flexible Staking')">Start Earning</button>
+        </div>
+        <div class="earn-card featured">
+          <div class="earn-badge">Most Popular</div>
+          <div class="earn-title">Fixed Staking</div>
+          <div class="earn-apy">12% <span>APY</span></div>
+          <div class="earn-desc">Lock your crypto for 90 days and earn guaranteed higher yields. Best returns on the platform.</div>
+          <ul style="font-size:13px;color:var(--muted2);margin-bottom:20px;padding-left:16px;line-height:2.2"><li>90-day lock period</li><li>Guaranteed rate</li><li>Auto-compounding</li></ul>
+          <button class="earn-btn primary" onclick="earnStart('Fixed Staking')">Start Earning</button>
+        </div>
+        <div class="earn-card">
+          <div class="earn-title">Liquidity Pool</div>
+          <div class="earn-apy">18%+ <span>APY</span></div>
+          <div class="earn-desc">Provide liquidity to trading pairs and earn a share of all trading fees generated.</div>
+          <ul style="font-size:13px;color:var(--muted2);margin-bottom:20px;padding-left:16px;line-height:2.2"><li>Variable yield</li><li>Fee sharing</li><li>LP token rewards</li></ul>
+          <button class="earn-btn secondary" onclick="earnStart('Liquidity Pool')">Start Earning</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPPORT -->
+  <div class="page" id="page-support">
+    <div class="page-content">
+      <div class="page-title">Support Center</div>
+      <div class="page-sub">We're here 24/7 to help you succeed</div>
+      <div class="support-grid">
+        <div>
+          <h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:20px">Frequently Asked Questions</h3>
+          <div class="faq-list">
+            <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>How do I create a Chainex account?</span><span class="arrow">▼</span></div><div class="faq-a">Click "Sign up" in the top navigation, enter your email or phone number, verify your identity, and you're ready to trade. The whole process takes under 2 minutes.</div></div>
+            <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>What are the trading fees?</span><span class="arrow">▼</span></div><div class="faq-a">Chainex charges a flat 0.1% fee per trade. There are no hidden fees, no deposit fees, and no withdrawal fees for most supported assets.</div></div>
+            <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Is my crypto safe on Chainex?</span><span class="arrow">▼</span></div><div class="faq-a">Yes. 95% of all assets are stored in offline cold wallets. We use 256-bit encryption, 2FA, and real-time monitoring to protect your funds 24/7.</div></div>
+            <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>How long do withdrawals take?</span><span class="arrow">▼</span></div><div class="faq-a">Crypto withdrawals are processed within 30 minutes. Fiat withdrawals take 1–3 business days depending on your bank and region.</div></div>
+            <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Which countries are supported?</span><span class="arrow">▼</span></div><div class="faq-a">Chainex is available in 180+ countries worldwide. A small number of countries are restricted due to regulatory requirements.</div></div>
+            <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>How does staking work?</span><span class="arrow">▼</span></div><div class="faq-a">Select a staking plan on the Earn page, choose your asset and amount, and start earning daily rewards. You can withdraw flexible stakes anytime.</div></div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <h3>Contact Support</h3>
+          <p>Can't find an answer? Our team responds within 2 hours.</p>
+          <div class="form-group"><label>Your Name</label><input type="text" placeholder="Shivani Chauhan" id="suppName"/></div>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@email.com" id="suppEmail"/></div>
+          <div class="form-group"><label>Topic</label><select id="suppTopic"><option>Account Issue</option><option>Trading Problem</option><option>Withdrawal Help</option><option>Security Concern</option><option>Other</option></select></div>
+          <div class="form-group"><label>Message</label><textarea rows="4" placeholder="Describe your issue..." id="suppMsg"></textarea></div>
+          <button class="submit-btn" onclick="submitSupport()">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="page" id="page-login">
+    <div class="auth-page">
+      <div class="auth-box">
+        <h2>Welcome back</h2>
+        <div class="auth-sub">Login to your Chainex account</div>
+        <div class="auth-form">
+          <div class="form-group"><label>Email or Phone</label><input type="text" placeholder="you@email.com" id="loginEmail"/></div>
+          <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••" id="loginPass"/></div>
+          <div class="remember-row">
+            <label><input type="checkbox" style="accent-color:var(--green)"/> Remember me</label>
+            <a onclick="showToast('📧 Password reset email sent!','📧')">Forgot password?</a>
+          </div>
+          <button class="auth-submit" onclick="doLogin()">Login to Account</button>
+        </div>
+        <div class="auth-divider">or continue with</div>
+        <div class="auth-social">
+          <button class="social-btn" onclick="showToast('🔵 Google login coming soon','ℹ️')">🔵 Google</button>
+          <button class="social-btn" onclick="showToast('Apple login coming soon','ℹ️')">⚫ Apple</button>
+        </div>
+        <div class="auth-switch">Don't have an account? <a onclick="navigate('signup')">Sign up free</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGNUP -->
+  <div class="page" id="page-signup">
+    <div class="auth-page">
+      <div class="auth-box">
+        <h2>Create account</h2>
+        <div class="auth-sub">Join 12 million traders on Chainex</div>
+        <div class="auth-form">
+          <div class="form-group"><label>Full Name</label><input type="text" placeholder="Shivani Chauhan" id="signupName"/></div>
+          <div class="form-group"><label>Email or Phone</label><input type="text" placeholder="you@email.com" id="signupEmail"/></div>
+          <div class="form-group"><label>Password</label><input type="password" placeholder="Min 8 characters" id="signupPass"/></div>
+          <div class="form-group" style="margin-bottom:20px">
+            <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-size:13px;color:var(--muted2)">
+              <input type="checkbox" style="accent-color:var(--green);margin-top:2px" id="agreeTerms"/>
+              I agree to the <span style="color:var(--green)">Terms of Service</span> and <span style="color:var(--green)">Privacy Policy</span>
+            </label>
+          </div>
+          <button class="auth-submit" onclick="doSignup()">Create Free Account</button>
+        </div>
+        <div class="auth-divider">or sign up with</div>
+        <div class="auth-social">
+          <button class="social-btn" onclick="showToast('Google signup coming soon','ℹ️')">🔵 Google</button>
+          <button class="social-btn" onclick="showToast('Apple signup coming soon','ℹ️')">⚫ Apple</button>
+        </div>
+        <div class="auth-switch">Already have an account? <a onclick="navigate('login')">Login</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="page" id="page-dashboard">
+    <div class="dash-wrap">
+      <div class="dash-header">
+        <div>
+          <div style="font-size:13px;color:var(--muted2);margin-bottom:4px">Good morning 👋</div>
+          <div class="dash-greeting">Welcome back, <span id="dashName">Shivani</span></div>
+        </div>
+        <div style="display:flex;gap:12px">
+          <button class="btn-outline" onclick="showToast('💳 Deposit flow coming soon','💳')">Deposit</button>
+          <button class="btn-green" onclick="showToast('📤 Withdrawal flow coming soon','📤')">Withdraw</button>
+        </div>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-card"><div class="dash-card-lbl">Total Portfolio</div><div class="dash-card-val">$26,000.16</div><div class="dash-card-chg pos">▲ +4.2% today</div></div>
+        <div class="dash-card"><div class="dash-card-lbl">Available Balance</div><div class="dash-card-val">$4,820.00</div><div class="dash-card-chg" style="color:var(--muted2)">Ready to trade</div></div>
+        <div class="dash-card"><div class="dash-card-lbl">Staking Rewards</div><div class="dash-card-val">$1,240.80</div><div class="dash-card-chg pos">▲ +12% APY</div></div>
+        <div class="dash-card"><div class="dash-card-lbl">Open Positions</div><div class="dash-card-val">7</div><div class="dash-card-chg" style="color:var(--muted2)">Across 4 assets</div></div>
+      </div>
+      <div class="dash-bottom">
+        <div class="dash-chart-card">
+          <div class="dash-chart-title">
+            Portfolio Performance
+            <div class="chart-tabs">
+              <button class="chart-tab active" onclick="setTab(this,'1D')">1D</button>
+              <button class="chart-tab" onclick="setTab(this,'1W')">1W</button>
+              <button class="chart-tab" onclick="setTab(this,'1M')">1M</button>
+              <button class="chart-tab" onclick="setTab(this,'1Y')">1Y</button>
+            </div>
+          </div>
+          <svg id="portfolioChart" width="100%" height="200" viewBox="0 0 600 200"></svg>
+        </div>
+        <div class="dash-chart-card">
+          <div class="dash-chart-title">My Portfolio</div>
+          <div class="portfolio-list">
+            <div class="port-item"><div class="port-icon" style="background:#f7931a1a;color:#f7931a">₿</div><div class="port-info"><div class="port-name">Bitcoin</div><div class="port-sym">BTC</div></div><div class="port-right"><div class="port-val">$12,840</div><div class="port-chg pos">+3.2%</div></div></div>
+            <div class="port-item"><div class="port-icon" style="background:#627eea1a;color:#627eea">Ξ</div><div class="port-info"><div class="port-name">Ethereum</div><div class="port-sym">ETH</div></div><div class="port-right"><div class="port-val">$6,920</div><div class="port-chg pos">+5.1%</div></div></div>
+            <div class="port-item"><div class="port-icon" style="background:#9945ff1a;color:#9945ff">◎</div><div class="port-info"><div class="port-name">Solana</div><div class="port-sym">SOL</div></div><div class="port-right"><div class="port-val">$3,400</div><div class="port-chg neg">-1.4%</div></div></div>
+            <div class="port-item"><div class="port-icon" style="background:#00e6761a;color:#00e676">H</div><div class="port-info"><div class="port-name">Chainex</div><div class="port-sym">CHX</div></div><div class="port-right"><div class="port-val">$2,840</div><div class="port-chg pos">+8.7%</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="script.js"></script>
+</body>
+</html>
