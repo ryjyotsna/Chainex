@@ -34,4 +34,21 @@
       toastTimer = setTimeout(function(){t.classList.remove('show')}, 3200);
     }
 
+    function heroSignup() {
+      var email = document.getElementById('heroEmail').value.trim();
+      if(!email){showToast('Please enter your email or phone','⚠️');return;}
+      navigate('signup');
+      showToast('Continue your signup below!','✉️');
+    }
+
+    function doLogin() {
+      var email = document.getElementById('loginEmail').value.trim();
+      var pass = document.getElementById('loginPass').value;
+      if(!email||!pass){showToast('Please fill in all fields','⚠️');return;}
+      currentUser = email.split('@')[0] || 'User';
+      document.getElementById('dashName').textContent = currentUser;
+      showToast('Welcome back, ' + currentUser + '!','🎉');
+      navigate('dashboard');
+    }
+
     
