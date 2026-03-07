@@ -51,4 +51,57 @@
       navigate('dashboard');
     }
 
-    
+    function doSignup() {
+      var name = document.getElementById('signupName').value.trim();
+      var email = document.getElementById('signupEmail').value.trim();
+      var pass = document.getElementById('signupPass').value;
+      var agree = document.getElementById('agreeTerms').checked;
+      if(!name||!email||!pass){showToast('Please fill in all fields','⚠️');return;}
+      if(!agree){showToast('Please agree to the Terms of Service','⚠️');return;}
+      if(pass.length<8){showToast('Password must be at least 8 characters','⚠️');return;}
+      currentUser = name.split(' ')[0];
+      document.getElementById('dashName').textContent = currentUser;
+      showToast('Account created! Welcome, ' + currentUser + '!','🎉');
+      navigate('dashboard');
+    }
+
+    function sparklineSVG(data, positive) {
+      var max=Math.max.apply(null,data), min=Math.min.apply(null,data), w=80, h=30;
+      var pts = data.map(function(v,i){
+        return (i/(data.length-1))*w + ',' + (h-((v-min)/(max-min||1))*(h-4)+2);
+      }).join(' ');
+      var col = positive ? '#00e676' : '#ff5252';
+      return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'"><polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    }
+
+    function renderPrices(filter) {
+      var filtered = coins.filter(function(c){
+        return c.name.toLowerCase().indexOf(filter.toLowerCase())>-1 || c.sym.toLowerCase().indexOf(filter.toLowerCase())>-1;
+      });
+      var html = filtered.map(function(c){
+        return '<tr>' +
+          '<td style="color:var(--muted2)">'+c.rank+'</td>' +
+          '<td><div class="coin-cell"><div class="coin-icon" style="background:'+c.color+'20;color:'+c.color+'">'+c.icon+'</div><div><div class="coin-name">'+c.name+'</div><div class="coin-sym">'+c.sym+'</div></div></div></td>' +
+          '<td style="font-weight:600">$'+c.price.toLocaleString()+'</td>' +
+          '<td class="'+(c.chg>=0?'pos':'neg')+'">'+(c.chg>=0?'▲':'▼')+' '+Math.abs(c.chg)+'%</td>' +
+          '<td style="color:var(--muted2)">'+c.mcap+'</td>' +
+          '<td>'+sparklineSVG(c.trend,c.chg>=0)+'</td>' +
+          '<td><button class="buy-btn" onclick="openBuy(\''+c.name+'\',\''+c.sym+'\','+c.price+')">Buy</button></td>' +
+          '</tr>';
+      }).join('');
+      document.getElementById('pricesBody').innerHTML = html;
+    }
+
+    function filterCoins() { renderPrices(document.getElementById('coinSearch').value); }
+
+    function openBuy(name, sym, price) {
+      buyName = name; buySym = sym; buyPrice = price;
+      document.getElementById('buyModalCoin').textContent = name;
+      document.getElementById('buyAmount').value = '';
+      document.getElementById('buyReceive').textContent = '0 ' + sym;
+      document.getElementById('buyModal').classList.add('open');
+      document.getElementById('buyAmount').oninput = function(){
+        var amt = parseFloat(this.value)||0;
+        document.getElementById('buyReceive').textContent = (amt/buyPrice).toFixed(6) + ' ' + buySym;
+      };
+    }
