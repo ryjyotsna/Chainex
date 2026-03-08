@@ -105,3 +105,67 @@
         document.getElementById('buyReceive').textContent = (amt/buyPrice).toFixed(6) + ' ' + buySym;
       };
     }
+
+    function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+    function confirmBuy() {
+      var amt = document.getElementById('buyAmount').value;
+      if(!amt||amt<=0){showToast('Enter a valid amount','⚠️');return;}
+      closeModal('buyModal');
+      showToast('Purchased $'+parseFloat(amt).toFixed(2)+' of '+buyName+'!','✅');
+    }
+
+    function earnStart(plan) {
+      if(!currentUser){showToast('Please login to start earning','⚠️');navigate('login');return;}
+      showToast('Enrolled in '+plan+'! Earnings start tomorrow.','💸');
+    }
+
+    function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
+
+    function submitSupport() {
+      var name = document.getElementById('suppName').value.trim();
+      var email = document.getElementById('suppEmail').value.trim();
+      var msg = document.getElementById('suppMsg').value.trim();
+      if(!name||!email||!msg){showToast('Please fill in all fields','⚠️');return;}
+      showToast("Message sent! We'll reply within 2 hours.",'📬');
+    }
+
+    function renderDashChart() {
+      var svg = document.getElementById('portfolioChart');
+      var W=600, H=200, pad=30;
+      var raw=[18000,19500,21000,20000,22500,24000,23000,25000,24500,26000];
+      var max=Math.max.apply(null,raw), min=Math.min.apply(null,raw);
+      var pts = raw.map(function(v,i){
+        var x=pad+(i/(raw.length-1))*(W-pad*2);
+        var y=pad+(1-(v-min)/(max-min))*(H-pad*2);
+        return x+','+y;
+      });
+      var lineD = 'M'+pts.join('L');
+      var areaD = lineD+'L'+(W-pad)+','+(H-pad)+'L'+pad+','+(H-pad)+'Z';
+      var dots = raw.map(function(v,i){
+        var x=pad+(i/(raw.length-1))*(W-pad*2);
+        var y=pad+(1-(v-min)/(max-min))*(H-pad*2);
+        return '<circle cx="'+x+'" cy="'+y+'" r="3.5" fill="#00e676" opacity="0.7"/>';
+      }).join('');
+      svg.innerHTML =
+        '<defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00e676" stop-opacity="0.25"/><stop offset="100%" stop-color="#00e676" stop-opacity="0"/></linearGradient></defs>' +
+        '<path d="'+areaD+'" fill="url(#cg)"/>' +
+        '<path d="'+lineD+'" fill="none" stroke="#00e676" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+        dots +
+        '<text x="'+pad+'" y="'+(H-8)+'" fill="#444" font-size="11">30d ago</text>' +
+        '<text x="'+(W-pad)+'" y="'+(H-8)+'" fill="#444" font-size="11" text-anchor="end">Today</text>';
+    }
+
+    function setTab(btn, label) {
+      document.querySelectorAll('.chart-tab').forEach(function(t){t.classList.remove('active')});
+      btn.classList.add('active');
+      renderDashChart();
+      showToast('Viewing '+label+' performance','📊');
+    }
+
+    document.getElementById('buyModal').addEventListener('click', function(e){
+      if(e.target===this) closeModal('buyModal');
+    });
+
+    navigate('home');
+  
