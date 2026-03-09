@@ -1,6 +1,9 @@
- var currentUser = null;
+// Stores the currently logged-in user
+var currentUser = null;
+// Variables used when buying a coin
  var buySym = '', buyName = '', buyPrice = 0;
 
+// List of available cryptocurrencies with details
  var coins = [
       {rank:1,name:'Bitcoin',sym:'BTC',icon:'₿',color:'#f7931a',price:67842.30,chg:3.24,mcap:'$1.34T',trend:[60,65,58,72,68,80,75]},
       {rank:2,name:'Ethereum',sym:'ETH',icon:'Ξ',color:'#627eea',price:3842.10,chg:5.12,mcap:'$461B',trend:[40,50,45,60,55,70,65]},
@@ -12,6 +15,7 @@
       {rank:8,name:'Chainex',sym:'CHX',icon:'H',color:'#00e676',price:12.84,chg:8.70,mcap:'$4.2B',trend:[30,40,45,55,60,75,80]}
     ];
 
+// Handles navigation between pages (home, login, dashboard, etc.)
     function navigate(page) {
       document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
       var el = document.getElementById('page-' + page);
